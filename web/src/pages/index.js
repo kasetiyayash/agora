@@ -1,6 +1,13 @@
 import SpinnerIcon from "@/icons/spinner";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
+import dynamic from "next/dynamic";
+
+const AgoraUIKit = dynamic(() => import("agora-react-uikit"), {
+  ssr: false,
+});
+
+const appId = "bcbe8ec0346c48f9864327cb900f820c";
 
 export default function Home() {
   const router = useRouter();
@@ -8,14 +15,16 @@ export default function Home() {
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState({});
 
+  const [rtcProps, setRtcProps] = useState({});
+
   const getRtcToken = async ({ channelId = null }) => {
     const id = channelId ?? new Date().getTime()?.toString();
     const accountId = Math.floor(Math.random() * 10000);
     return await fetch(
-      `http://localhost:5000/token/rtc?channel=${id}&uid=${accountId}`
+      `http://localhost:5000/token/rtm?channel=${id}&account=${0}`
     )
       .then((res) => res.json())
-      .then(({ key }) => ({ token: key, channel: id, accountId }));
+      .then(({ key }) => setRtcProps({ token: key, channel: id, appId }));
   };
 
   const handleChange = (event) => {
@@ -40,14 +49,9 @@ export default function Home() {
 
   const handleCreate = async ({ channelId }) => {
     try {
-      setLoading({ create: true });
       setError(false);
-      const props = await getRtcToken({ channelId });
-      const routes = {
-        query: { ...props },
-        pathname: "/call",
-      };
-      router.push({ ...routes }).then(() => {
+      setLoading({ create: true });
+      await getRtcToken({ channelId }).then(() => {
         setLoading({});
       });
     } catch (error) {
@@ -56,7 +60,19 @@ export default function Home() {
     }
   };
 
-  return (
+  const styles = {
+    container: { width: "100vw", height: "100vh", display: "flex", flex: 1 },
+  };
+
+  const callbacks = {
+    EndCall: () => replace("/"),
+  };
+
+  return rtcProps?.token ? (
+    <main style={styles.container}>
+      <AgoraUIKit rtcProps={rtcProps} callbacks={callbacks} />
+    </main>
+  ) : (
     <main className="flex min-h-screen flex-col items-center gap-4 p-12 font-semibold text-black">
       <div className="space-y-4 w-full max-w-xl">
         <h1 className="text-2xl">Agora - Video Calling</h1>

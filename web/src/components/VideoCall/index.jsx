@@ -1,20 +1,46 @@
+import React from "react";
+import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
-import React, { useState } from "react";
 
-const rtcProps = {
-  appId: "bcbe8ec0346c48f9864327cb900f820c",
-  channel: "<Channel name>",
-  token: "<Your channel token>",
-};
+const AgoraUIKit = dynamic(() => import("agora-react-uikit"), {
+  ssr: false,
+});
 
 const VideoCall = () => {
-  const { query } = useRouter();
+  const { query, push } = useRouter();
+
   console.log("query: ", query);
 
+  const { channel, token } = query || {};
+
+  const hasWindow = typeof window !== "undefined";
+
+  // const rtcProps = {
+  //   appId: "bcbe8ec0346c48f9864327cb900f820c",
+  //   channel: "1717220365710",
+  //   token:
+  //     "007eJxTYLANEvrGvbSU+cPqWYkf2C++T64vW7PaecbSy8Zp145yK61XYEhKTkq1SE02MDYxSzaxSLO0MDMxNjJPTrI0MEizMDJIztwaldYQyMjAGfObgREKQXxeBkNzQ3MjIwNjM1NzQwMGBgCPCiCy",
+  // };
+  const rtcProps = {
+    appId: "bcbe8ec0346c48f9864327cb900f820c",
+    channel,
+    token,
+  };
+
+  const styles = {
+    container: { width: "100vw", height: "100vh", display: "flex", flex: 1 },
+  };
+
+  const callbacks = {
+    EndCall: () => push("/"),
+  };
+
   return (
-    <main className="flex min-h-screen flex-col items-center gap-4 p-12 font-semibold border-2 border-black">
-      VideoCall
-    </main>
+    rtcProps?.token && (
+      <main style={styles.container}>
+        <AgoraUIKit rtcProps={rtcProps} callbacks={callbacks} />
+      </main>
+    )
   );
 };
 
