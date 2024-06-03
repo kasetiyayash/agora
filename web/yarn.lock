@@ -14,6 +14,18 @@
     pako "^2.1.0"
     webrtc-adapter "8.2.0"
 
+"@agora-js/media@4.21.0":
+  version "4.21.0"
+  resolved "https://registry.yarnpkg.com/@agora-js/media/-/media-4.21.0.tgz#c0b39bf7cf4dfc60af19ef3f99558d2001ad929d"
+  integrity sha512-X4aV84/gB4O7GOOkwP3+NGTHtT2IVkpa4DFBTlBNl7hrkjDwUeanzCQZyva92Zyw59N0NI6dKh9CjJKoIL5Now==
+  dependencies:
+    "@agora-js/report" "4.21.0"
+    "@agora-js/shared" "4.21.0"
+    agora-rte-extension "^1.2.4"
+    axios "^1.6.8"
+    pako "^2.1.0"
+    webrtc-adapter "8.2.0"
+
 "@agora-js/report@4.20.2":
   version "4.20.2"
   resolved "https://registry.yarnpkg.com/@agora-js/report/-/report-4.20.2.tgz#8f185dfba8dd6b3fcc9b89797f3f108be7224e90"
@@ -22,12 +34,28 @@
     "@agora-js/shared" "4.20.2"
     axios "^1.6.7"
 
+"@agora-js/report@4.21.0":
+  version "4.21.0"
+  resolved "https://registry.yarnpkg.com/@agora-js/report/-/report-4.21.0.tgz#16a1e1197aed81f44b249e376f44ead8a8ceeb30"
+  integrity sha512-c8KIdomuPItwvri431z5CPT7L4m+jLJrwWWt/QS3JN+sp/t49NnoOIyKQf3y5xCbyNPCNNeGofrwkaIRu4YE8g==
+  dependencies:
+    "@agora-js/shared" "4.21.0"
+    axios "^1.6.8"
+
 "@agora-js/shared@4.20.2":
   version "4.20.2"
   resolved "https://registry.yarnpkg.com/@agora-js/shared/-/shared-4.20.2.tgz#7baa6c283623036d49387b9cc8748424a560f25b"
   integrity sha512-vm5PtWSgbrNmH/RWQ6WfV7g/JCnjtMGc9qvnqMCRItQA1CIgdhNKtW4eH6uzZn3D6xCFS33WjWUkQ/VGo7NPnA==
   dependencies:
     axios "^1.6.7"
+    ua-parser-js "^0.7.34"
+
+"@agora-js/shared@4.21.0":
+  version "4.21.0"
+  resolved "https://registry.yarnpkg.com/@agora-js/shared/-/shared-4.21.0.tgz#7e491a7eb722eb736a17039c3f07a75aefcc0bfb"
+  integrity sha512-oqaiuIhG9ai/NXUDEmj9b3uGxxU9I0OZZszNaJexjakJuVZPM7ypzrCLUi5SzkTh++QOf68yuvD488fjq5WQsA==
+  dependencies:
+    axios "^1.6.8"
     ua-parser-js "^0.7.34"
 
 "@alloc/quick-lru@^5.2.0":
@@ -183,6 +211,25 @@ agora-rtc-react@^1.1.3:
   dependencies:
     agora-rtc-sdk-ng "^4.3.0"
 
+agora-rtc-react@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/agora-rtc-react/-/agora-rtc-react-2.1.0.tgz#b4855e79b8c42e5b348595bc1fe7a7f8c82cf7f4"
+  integrity sha512-3FGteA7FG51oK5MusbYNgAcKZaAQK+4sbEz4F0DPzcpDxqNANpocJDqOsmXoUAj5yDBsBZelmagU3abd++6RGA==
+
+agora-rtc-sdk-ng@^4.21.0:
+  version "4.21.0"
+  resolved "https://registry.yarnpkg.com/agora-rtc-sdk-ng/-/agora-rtc-sdk-ng-4.21.0.tgz#56bf0ed948cdd6f14706d23061a7a4cbecb13ce5"
+  integrity sha512-EAZMdhbqIXl/PtFqEQn0O5Pmj3Tt+4oTXtd76MK1CozgbcDsc0TmFZK3qM25eaKqhzTz1wiVCwzBCWs3pF5OpQ==
+  dependencies:
+    "@agora-js/media" "4.21.0"
+    "@agora-js/report" "4.21.0"
+    "@agora-js/shared" "4.21.0"
+    agora-rte-extension "^1.2.4"
+    axios "^1.6.8"
+    formdata-polyfill "^4.0.7"
+    ua-parser-js "^0.7.34"
+    webrtc-adapter "8.2.0"
+
 agora-rtc-sdk-ng@^4.3.0:
   version "4.20.2"
   resolved "https://registry.yarnpkg.com/agora-rtc-sdk-ng/-/agora-rtc-sdk-ng-4.20.2.tgz#8a4c4a35f50a79c5d43ec720a36dd3c38b2ac6bd"
@@ -259,7 +306,7 @@ asynckit@^0.4.0:
   resolved "https://registry.yarnpkg.com/asynckit/-/asynckit-0.4.0.tgz#c79ed97f7f34cb8f2ba1bc9790bcc366474b4b79"
   integrity sha512-Oei9OH4tRh0YqU3GxhX79dM/mwVgvbZJaSNaRk+bshkj0S5cfHcgYakreBjrHwatXKbz+IoIdYLxrKim2MjW0Q==
 
-axios@^1.6.7:
+axios@^1.6.7, axios@^1.6.8:
   version "1.7.2"
   resolved "https://registry.yarnpkg.com/axios/-/axios-1.7.2.tgz#b625db8a7051fbea61c35a3cbb3a1daa7b9c7621"
   integrity sha512-2A8QhOMrbomlDuiLeK9XibIBzuHeRcqqNOHp0Cyp5EoJ1IFDh+XZH3A6BkXtv0K4gFGCI0Y4BM7B1wOEi0Rmgw==

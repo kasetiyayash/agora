@@ -2,17 +2,13 @@ require("dotenv").config();
 const http = require("http");
 const express = require("express");
 
-const {
-  RtcTokenBuilder,
-  RtmTokenBuilder,
-  RtcRole,
-  RtmRole,
-} = require("agora-access-token");
+const { RtcTokenBuilder, RtmTokenBuilder, RtcRole } = require("agora-token");
 
 const port = process.env.PORT || 5000;
 
 const appID = "bcbe8ec0346c48f9864327cb900f820c";
 const appCertificate = "c2466cfc69b4474ba3eb57d65fa191a1";
+const appCertificateSecond = "a4dd65dcb7b94e459fb1f55a7dc12072";
 
 const expirationTimeInSeconds = 7200;
 const role = RtcRole.PUBLISHER;
@@ -55,7 +51,6 @@ const generateRtmToken = function (req, resp) {
     appID,
     appCertificate,
     account,
-    RtmRole,
     privilegeExpiredTs
   );
 

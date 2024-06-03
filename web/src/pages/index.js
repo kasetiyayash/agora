@@ -10,21 +10,32 @@ const AgoraUIKit = dynamic(() => import("agora-react-uikit"), {
 const appId = "bcbe8ec0346c48f9864327cb900f820c";
 
 export default function Home() {
-  const router = useRouter();
+  const { replace, push } = useRouter();
   const [channel, setChannel] = useState();
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState({});
+
+  const [isHost, setHost] = useState(true);
+  const [isPinned, setPinned] = useState(true);
 
   const [rtcProps, setRtcProps] = useState({});
 
   const getRtcToken = async ({ channelId = null }) => {
     const id = channelId ?? new Date().getTime()?.toString();
-    const accountId = Math.floor(Math.random() * 10000);
-    return await fetch(
-      `http://localhost:5000/token/rtm?channel=${id}&account=${0}`
-    )
+    return await fetch(`http://localhost:5000/token/rtc?channel=${id}&uid=${0}`)
       .then((res) => res.json())
-      .then(({ key }) => setRtcProps({ token: key, channel: id, appId }));
+      .then(({ key }) => {
+        push({
+          query: {
+            token: key,
+            channel: id,
+            appId,
+            // role: !channelId ? "host" : "audience",
+            // layout: !channelId ? 1 : 0,
+          },
+          pathname: `/call/${id}`,
+        });
+      });
   };
 
   const handleChange = (event) => {
@@ -36,6 +47,8 @@ export default function Home() {
     try {
       setLoading({ join: true });
       if (channel) {
+        setHost(false);
+        setPinned(false);
         handleCreate({ channelId: channel });
       } else {
         setError(true);
