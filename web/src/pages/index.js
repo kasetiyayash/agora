@@ -22,7 +22,7 @@ export default function Home() {
 
   const getRtcToken = async ({ channelId = null }) => {
     const id = channelId ?? new Date().getTime()?.toString();
-    return await fetch(`http://localhost:5000/token/rtc?channel=${id}&uid=${0}`)
+    return await fetch(`http://localhost:4000/token/rtc?channel=${id}&uid=${0}`)
       .then((res) => res.json())
       .then(({ key }) => {
         push({
