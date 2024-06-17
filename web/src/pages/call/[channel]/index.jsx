@@ -5,7 +5,11 @@ import React from "react";
 
 const VideoCall = dynamic(import("@/components/VideoCall"), {
   ssr: false,
-  loading: () => <p>Loading....</p>,
+  loading: () => (
+    <div className="flex items-center justify-center h-screen w-screen">
+      <p>Loading....</p>
+    </div>
+  ),
 });
 
 const CallIndex = () => {
@@ -14,9 +18,6 @@ const CallIndex = () => {
   const { channel, token } = query;
   return (
     <main className="flex w-full flex-col">
-      <p className="absolute z-10 mt-2 ml-12 text-2xl font-bold text-gray-900">
-        {channel}
-      </p>
       <VideoCall
         appId={"bcbe8ec0346c48f9864327cb900f820c"}
         channel={channel}
