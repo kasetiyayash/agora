@@ -22,6 +22,7 @@ export default function Home() {
 
   const getRtcToken = async ({ channelId = null }) => {
     const id = channelId ?? new Date().getTime()?.toString();
+    const uid = Math.floor(new Date().getSeconds() / 2);
     return await fetch(`http://localhost:4000/token/rtc?channel=${id}&uid=${0}`)
       .then((res) => res.json())
       .then(({ key }) => {
@@ -30,6 +31,7 @@ export default function Home() {
             token: key,
             channel: id,
             appId,
+            uid: 0,
             // role: !channelId ? "host" : "audience",
             // layout: !channelId ? 1 : 0,
           },

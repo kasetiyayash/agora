@@ -36,6 +36,7 @@ const VideoCall = (props) => {
             channel={props.channel}
             appId={props.appId}
             token={props.token}
+            uid={props.uid}
             isScreenSharing={isScreenSharing}
             client={client}
           />
@@ -84,23 +85,13 @@ const ScreenShare = ({ client }) => {
 };
 
 const Videos = (props) => {
-  const { appId, channel, token, isScreenSharing, client } = props;
+  const { appId, channel, token, uid } = props;
   const { isLoading: isLoadingMic, localMicrophoneTrack } =
     useLocalMicrophoneTrack();
   const { isLoading: isLoadingCam, localCameraTrack } = useLocalCameraTrack();
 
-  const getGridCols = (numUsers) => {
-    if (numUsers === 1) return "grid-cols-1";
-    if (numUsers <= 4) return "grid-cols-2";
-    if (numUsers <= 9) return "grid-cols-3";
-    return "grid-cols-4";
-  };
-
   const remoteUsers = useRemoteUsers();
 
-  const gridColsClass = getGridCols(remoteUsers.length);
-
-  const { videoTracks } = useRemoteVideoTracks(remoteUsers);
   const { audioTracks } = useRemoteAudioTracks(remoteUsers);
 
   usePublish([localMicrophoneTrack, localCameraTrack]);
@@ -108,6 +99,7 @@ const Videos = (props) => {
     appid: appId,
     channel: channel,
     token: token,
+    uid: uid,
   });
 
   audioTracks.map((track) => track.play());
@@ -115,7 +107,7 @@ const Videos = (props) => {
   const deviceLoading = isLoadingMic || isLoadingCam;
 
   return (
-    <div className="relative flex flex-col justify-between items-start w-full h-[calc(100vh-64px)] p-4">
+    <div className="relative w-full h-[calc(100vh-64px)]">
       {deviceLoading ? (
         <div className="absolute flex items-center justify-center inset-0">
           Loading Devices...
@@ -125,21 +117,19 @@ const Videos = (props) => {
           <LocalVideoTrack
             play={true}
             track={localCameraTrack}
-            className="!z-10 absolute !w-[200px] bottom-5 right-5 !h-[200px] aspect-video !rounded-2xl *:rounded-[inherit]"
+            className="!z-10 absolute !w-[200px] bottom-5 right-5 !h-[200px] !aspect-square !rounded-2xl *:rounded-[inherit]"
           />
-
-          <div className={`w-full flex flex-col gap-4`}>
-            {/* {isScreenSharing && <ScreenShare client={client} />} */}
-            <div className="h-60 w-60 relative col-span-1 border border-red-600">
-              {remoteUsers.map((user) => {
-                return (
-                  <RemoteUser
-                    user={user}
-                    className="!z-0 absolute inset-0 w-full h-full aspect-video !rounded-2xl *:rounded-[inherit]"
-                  />
-                );
-              })}
-            </div>
+          <div
+            className={`grid !h-[calc(100vh-64px)] !w-screen grid-flow-col gap-2 overflow-auto rounded-xl p-2 `}
+          >
+            {remoteUsers.map((user) => {
+              return (
+                <RemoteUser
+                  user={user}
+                  className="!z-0 !aspect-square !h-full rounded-xl"
+                />
+              );
+            })}
           </div>
         </>
       )}
